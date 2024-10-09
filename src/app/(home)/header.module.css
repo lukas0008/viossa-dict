@@ -1,0 +1,11 @@
+.dropdownChild {
+  display: none;
+}
+.dropdownParent:hover .dropdownChild {
+  display: block;
+}
+
+.dropdownParent:hover .dropdownUnround {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

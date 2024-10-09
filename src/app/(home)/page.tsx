@@ -29,16 +29,12 @@ export default async function Home({
           <p>Markdown support</p>
         </li>
         <li className="flex flex-row gap-2">
-          <input type="checkbox" disabled checked={false} />
-          <p>Importing word to definition file</p>
-        </li>
-        <li className="flex flex-row gap-2">
-          <input type="checkbox" disabled checked={false} />
+          <input type="checkbox" disabled checked={true} />
           <p>Share word list (not including definitions)</p>
         </li>
         <li className="flex flex-row gap-2">
           <input type="checkbox" disabled checked={false} />
-          <p>Discord login</p>
+          <p>Importing word{"<=>"}definition file</p>
         </li>
       </ul>
 

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { definitions } from "~/server/db/schema";
+import { definitions, users } from "~/server/db/schema";
 import { eq, and, count } from "drizzle-orm";
 
 export const dictionaryRouter = createTRPCRouter({
@@ -58,6 +58,17 @@ export const dictionaryRouter = createTRPCRouter({
 
       return q.map((v) => v.word);
     }),
+  list_shared_words: publicProcedure
+    .input(z.object({ code: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const words = await ctx.db
+        .select()
+        .from(users)
+        .where(eq(users.share_id, input.code))
+        .rightJoin(definitions, eq(users.id, definitions.ownerId));
+
+      return words.map((def) => def.definition.word);
+    }),
   def_pages: publicProcedure.query(async ({ ctx }) => {
     const PAGE_SIZE = 50;
 
@@ -68,6 +79,26 @@ export const dictionaryRouter = createTRPCRouter({
       .from(definitions)
       .where(eq(definitions.ownerId, ctx.session.user.id));
 
-    return q[0]?.count;
+    return Math.ceil((q[0]?.count ?? 1) / PAGE_SIZE);
+  }),
+  get_share_link: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.session) return;
+
+    const q = await ctx.db
+      .select()
+      .from(users)
+      .where(eq(users.id, ctx.session.user.id));
+    return q[0]!.share_id ?? undefined;
+  }),
+  gen_share_link: publicProcedure.mutation(async ({ ctx }) => {
+    if (!ctx.session) return;
+
+    const uuid = crypto.randomUUID();
+    console.log(uuid);
+    await ctx.db
+      .update(users)
+      .set({ share_id: uuid })
+      .where(eq(users.id, ctx.session.user.id));
+    return uuid;
   }),
 });

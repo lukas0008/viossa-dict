@@ -75,6 +75,7 @@ export const users = createTable("user", {
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
+  share_id: varchar("share_id", { length: 255 }).unique(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
