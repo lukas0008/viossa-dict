@@ -4,10 +4,8 @@ import {
   integer,
   pgTableCreator,
   primaryKey,
-  serial,
   text,
   timestamp,
-  unique,
   uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core";

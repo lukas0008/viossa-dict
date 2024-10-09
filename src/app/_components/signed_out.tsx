@@ -1,4 +1,3 @@
-import { Component, FC } from "react";
 import { getServerAuthSession } from "~/server/auth";
 
 export const SignedOut = async ({

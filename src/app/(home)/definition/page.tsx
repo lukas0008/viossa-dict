@@ -1,4 +1,3 @@
-import { getServerAuthSession } from "~/server/auth";
 import { SignedIn } from "../../_components/signed_in";
 import { api } from "~/trpc/server";
 import { SignedOut } from "../../_components/signed_out";

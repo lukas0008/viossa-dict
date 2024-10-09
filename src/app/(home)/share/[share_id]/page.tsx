@@ -14,7 +14,7 @@ export default async function SharePage({
 
       <ul className="m-2 list-inside list-disc">
         {words.map((word) => (
-          <li>{word}</li>
+          <li key={word}>{word}</li>
         ))}
       </ul>
     </>

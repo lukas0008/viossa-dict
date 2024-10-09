@@ -3,8 +3,7 @@ import Link from "next/link";
 // import { ManagedPagination } from "@components/managed_pagination";
 
 // import { LatestPost } from "~/app/_components/post";
-import { getServerAuthSession } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
+import { api } from "~/trpc/server";
 
 export default async function WordListPAge({
   searchParams,
@@ -13,7 +12,6 @@ export default async function WordListPAge({
 }) {
   // const hello = await api.post.hello({ text: "from tRPC" });
   const cPage = +(searchParams.page ?? 1) || 1;
-  const session = await getServerAuthSession();
   const pages = await api.dictionary.def_pages();
   const pageData = await api.dictionary.list_defs({ page: cPage - 1 });
   // let hello = await api.dictionary.get_defs({ word: "hi" });

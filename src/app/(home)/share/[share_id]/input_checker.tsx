@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Markdown from "react-markdown";
 
 export const InputChecker = (props: { words: string[] }) => {
   const [input, setInput] = useState("");

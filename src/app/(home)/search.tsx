@@ -1,8 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-import searchIcon from "public/icons/search.svg";
-import Image from "next/image";
 
 export const SearchBar = () => {
   const router = useRouter();

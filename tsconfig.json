@@ -31,7 +31,7 @@
     }
   },
   "include": [
-    ".eslintrc.copy.cjs",
+    ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

@@ -7,6 +7,9 @@ export const action = async (sigma: any, form: FormData) => {
   if (!word) return;
   if (!def) return;
 
+  if (typeof word != "string" || typeof def != "string") {
+    return { sigma: false, word };
+  }
   await api.dictionary.post_def({
     word: word?.toString(),
     definition: def?.toString(),

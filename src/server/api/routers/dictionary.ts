@@ -30,7 +30,7 @@ export const dictionaryRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       if (!ctx.session) return;
 
-      const q = await ctx.db
+      await ctx.db
         .insert(definitions)
         .values({
           ownerId: ctx.session.user.id,

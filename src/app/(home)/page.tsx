@@ -1,12 +1,6 @@
 import Link from "next/link";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] };
-}) {
+export default async function Home() {
   return (
     <div className="flex flex-col gap-2 p-8">
       <h1 className="text-3xl">Your personal Viossa Dictionary</h1>
