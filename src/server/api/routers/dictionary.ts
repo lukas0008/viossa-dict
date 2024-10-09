@@ -21,7 +21,7 @@ export const dictionaryRouter = createTRPCRouter({
       return q.length > 0
         ? {
             word: q[0]!.word,
-            definition: q[0]?.definition,
+            definition: q[0]?.definition ?? undefined,
           }
         : undefined;
     }),
