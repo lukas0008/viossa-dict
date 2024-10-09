@@ -1,5 +1,5 @@
-import { useParams } from "next/navigation";
 import { api } from "~/trpc/server";
+import { InputChecker } from "./input_checker";
 
 export default async function SharePage({
   params: { share_id },
@@ -9,10 +9,14 @@ export default async function SharePage({
   const words = await api.dictionary.list_shared_words({ code: share_id });
 
   return (
-    <ul className="list-inside list-disc m-2">
-      {words.map((word) => (
-        <li>{word}</li>
-      ))}
-    </ul>
+    <>
+      <InputChecker words={words} />
+
+      <ul className="m-2 list-inside list-disc">
+        {words.map((word) => (
+          <li>{word}</li>
+        ))}
+      </ul>
+    </>
   );
 }
