@@ -2,6 +2,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { SignedIn } from "../../_components/signed_in";
 import { api } from "~/trpc/server";
 import { SignedOut } from "../../_components/signed_out";
+import Markdown from "react-markdown";
 
 export default async function DefinitionPage({
   searchParams,
@@ -26,7 +27,7 @@ export default async function DefinitionPage({
             <h2 className="text-lg underline">Definition</h2>
             <div className="flex h-fit w-full flex-row gap-4">
               <div className="w-1 min-w-1 bg-neutral-200"></div>
-              <p>{def.definition}</p>
+              <Markdown>{def.definition}</Markdown>
             </div>
           </div>
         ) : (
