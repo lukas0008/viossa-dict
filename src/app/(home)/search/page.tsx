@@ -1,7 +1,4 @@
-import { SignedIn } from "../../_components/signed_in";
 import { api } from "~/trpc/server";
-import { SignedOut } from "../../_components/signed_out";
-import Markdown from "react-markdown";
 import Link from "next/link";
 import { levenshtein } from "~/lib/levenshtein";
 import { boldenSubstring } from "~/lib/react_utils";
