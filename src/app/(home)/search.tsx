@@ -2,7 +2,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type ChangeEvent, useRef, useState } from "react";
+import { boldenSubstring } from "~/lib/react_utils";
 import { api } from "~/trpc/react";
+import styles from "./header.module.css";
 
 export const SearchBar = () => {
   const query = api.dictionary.list_words.useQuery();
@@ -39,23 +41,8 @@ export const SearchBar = () => {
     );
   };
 
-  const createBolded = (suggestion: string) => {
-    const at = suggestion.indexOf(text.current);
-    if (at === -1) return suggestion;
-    return (
-      <>
-        {suggestion.substring(0, at)}
-        <strong>{text.current}</strong>
-        {suggestion.length - at - text.current.length > 0 ? (
-          suggestion.substring(at + text.current.length)
-        ) : (
-          <></>
-        )}
-      </>
-    );
-  };
   return (
-    <div className="pointer-events-auto mx-auto p-2">
+    <div className={"pointer-events-auto mx-auto p-2 " + styles.searchBar}>
       <div className="flex w-96 flex-row items-center rounded-xl bg-white pr-2">
         <input
           className="w-full rounded-l-xl p-1.5 hover:outline-none focus:outline-none"
@@ -86,14 +73,20 @@ export const SearchBar = () => {
         </button>
       </div>
       {typeof suggestions != "undefined" ? (
-        <div className="absolute flex w-96 flex-col border bg-white p-2 shadow">
+        <div
+          className={
+            "absolute hidden w-96 flex-col gap-2 border bg-white p-2 shadow " +
+            styles.searchSuggestions
+          }
+        >
           {suggestions.length ? (
             suggestions.map((suggestion) => (
               <Link
                 key={suggestion}
                 href={"/definition?word=" + encodeURIComponent(suggestion)}
+                className="rounded-md p-0.5 transition hover:bg-black/5"
               >
-                {createBolded(suggestion)}
+                {boldenSubstring(suggestion, text.current)}
               </Link>
             ))
           ) : (

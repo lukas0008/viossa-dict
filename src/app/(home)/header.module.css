@@ -1,3 +1,4 @@
+/* header.tsx */
 .dropdownChild {
   display: none;
 }
@@ -8,4 +9,9 @@
 .dropdownParent:hover .dropdownUnround {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+/* search.tsx */
+.searchBar:focus-within .searchSuggestions {
+  display: flex;
 }
