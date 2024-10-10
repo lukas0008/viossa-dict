@@ -69,6 +69,16 @@ export const dictionaryRouter = createTRPCRouter({
 
       return words.map((def) => def.definition.word);
     }),
+  list_words: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.session) return;
+
+    const words = await ctx.db
+      .select()
+      .from(definitions)
+      .where(eq(definitions.ownerId, ctx.session.user.id));
+
+    return words.map((def) => def.word);
+  }),
   def_pages: publicProcedure.query(async ({ ctx }) => {
     const PAGE_SIZE = 50;
 

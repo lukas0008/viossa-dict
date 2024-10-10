@@ -27,6 +27,10 @@ export default async function Home() {
           <p>Share word list (not including definitions)</p>
         </li>
         <li className="flex flex-row gap-2">
+          <input type="checkbox" disabled checked={true} />
+          <p>Searching</p>
+        </li>
+        <li className="flex flex-row gap-2">
           <input type="checkbox" disabled checked={false} />
           <p>Importing word{"<=>"}definition file</p>
         </li>
