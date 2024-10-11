@@ -111,4 +111,19 @@ export const dictionaryRouter = createTRPCRouter({
       .where(eq(users.id, ctx.session.user.id));
     return uuid;
   }),
+  delete_def: publicProcedure
+    .input(z.object({ word: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.session) return false;
+
+      await ctx.db
+        .delete(definitions)
+        .where(
+          and(
+            eq(definitions.word, input.word),
+            eq(definitions.ownerId, ctx.session.user.id),
+          ),
+        );
+      return true;
+    }),
 });

@@ -52,6 +52,7 @@ export const definitions = createTable(
       .references(() => users.id),
     word: varchar("word", { length: 64 }).notNull(),
     definition: text("definition"),
+    created_at: timestamp("created_at").defaultNow(),
   },
   (definition) => ({
     wordIndex: uniqueIndex("owner_word_id_idx").on(

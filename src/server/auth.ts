@@ -6,6 +6,8 @@ import {
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
 import DiscordProvider from "next-auth/providers/discord";
+// TODO: add useless providers
+// import OsuProvider from "next-auth/providers/osu"
 
 import { env } from "~/env";
 import { db } from "~/server/db";

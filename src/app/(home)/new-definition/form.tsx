@@ -3,7 +3,8 @@ import { useFormState, useFormStatus } from "react-dom";
 import { action } from "./form_actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Markdown from "react-markdown";
+import { DefinitionEditor } from "@components/definition_editor";
+import { api } from "~/trpc/react";
 
 export const NewDefinitionForm = (props: {
   startingWord?: string;
@@ -20,12 +21,16 @@ export const NewDefinitionForm = (props: {
       "/definition?word=" + encodeURIComponent(state.word.toString()),
     );
   }
-  const [preview, setPreview] = useState(false);
-  const [definitionText, setDefinitionText] = useState(
-    props.startingDefinition ?? "",
-  );
+  const definitionText = useState(props.startingDefinition ?? "");
+  const utils = api.useUtils();
   return (
-    <form className="flex flex-col gap-2 p-2" action={formAction}>
+    <form
+      className="flex flex-col gap-2 p-2"
+      onSubmit={() => {
+        utils.dictionary.list_words.invalidate();
+      }}
+      action={formAction}
+    >
       <label htmlFor="word">Word</label>
       <input
         required={true}
@@ -34,46 +39,9 @@ export const NewDefinitionForm = (props: {
         defaultValue={props.startingWord}
         id="word"
       />
-      <label htmlFor="def">Definition</label>
-      <div className="bg-neutral-100">
-        <div className="flex flex-row">
-          <button
-            type="button"
-            className={
-              "w-24 border p-1 transition hover:bg-neutral-200 " +
-              (preview || "bg-neutral-200")
-            }
-            onClick={() => setPreview(false)}
-          >
-            Write
-          </button>
 
-          <button
-            type="button"
-            className={
-              "w-24 border px-2 py-1 transition hover:bg-neutral-200 " +
-              (preview && "bg-neutral-200")
-            }
-            onClick={() => setPreview(true)}
-          >
-            Preview
-          </button>
-        </div>
-        {preview ? (
-          <div className="w-full border bg-white p-0.5">
-            <Markdown className="prose">{definitionText}</Markdown>
-          </div>
-        ) : (
-          <textarea
-            required={true}
-            name="def"
-            className="block h-64 w-full border p-0.5 outline-none hover:outline-none focus:outline-none"
-            id="def"
-            value={definitionText}
-            onChange={(e) => setDefinitionText(e.target.value)}
-          />
-        )}
-      </div>
+      <DefinitionEditor definitionText={definitionText} />
+
       <button
         className="mx-auto w-fit rounded border px-2 py-1 transition hover:bg-neutral-200"
         disabled={pending}

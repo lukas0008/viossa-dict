@@ -1,3 +1,5 @@
+import type { useState } from "react";
+
 export const boldenSubstring = (input: string, substring: string) => {
   const at = input.indexOf(input);
   if (at === -1) return input;
@@ -13,3 +15,14 @@ export const boldenSubstring = (input: string, substring: string) => {
     </>
   );
 };
+
+type NoUndefinedState<T> = T extends [
+  infer S | undefined,
+  React.Dispatch<React.SetStateAction<infer S | undefined>>,
+]
+  ? [S, React.Dispatch<React.SetStateAction<S>>]
+  : never;
+
+export type ReactStateType<T> = NoUndefinedState<
+  ReturnType<typeof useState<T>>
+>;
