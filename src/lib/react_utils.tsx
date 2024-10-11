@@ -1,7 +1,7 @@
 import type { useState } from "react";
 
 export const boldenSubstring = (input: string, substring: string) => {
-  const at = input.indexOf(input);
+  const at = input.indexOf(substring);
   if (at === -1) return input;
   return (
     <>
