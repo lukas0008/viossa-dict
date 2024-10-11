@@ -11,6 +11,8 @@ import {
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
+type AdapterAccountType = AdapterAccount["type"] | "webauthn";
+
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
  * database instance for multiple projects.
@@ -62,6 +64,20 @@ export const definitions = createTable(
   }),
 );
 
+export const alternateSpellings = createTable("alternate_spelling", {
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  ownerId: varchar("owner_id", { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  definitionId: varchar("definition_id", { length: 255 })
+    .notNull()
+    .references(() => definitions.id),
+  alternateSpelling: varchar("alternate_spelling", { length: 64 }),
+});
+
 export const users = createTable("user", {
   id: varchar("id", { length: 255 })
     .notNull()
@@ -88,7 +104,7 @@ export const accounts = createTable(
       .notNull()
       .references(() => users.id),
     type: varchar("type", { length: 255 })
-      .$type<AdapterAccount["type"]>()
+      .$type<AdapterAccountType>()
       .notNull(),
     provider: varchar("provider", { length: 255 }).notNull(),
     providerAccountId: varchar("provider_account_id", {
