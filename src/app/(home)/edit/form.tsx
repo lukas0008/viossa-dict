@@ -41,6 +41,7 @@ export const EditForm = (props: {
       />
       <label htmlFor="word">Word</label>
       <input
+        maxLength={64}
         required={true}
         name="word"
         className="border"

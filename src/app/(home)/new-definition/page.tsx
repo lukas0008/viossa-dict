@@ -30,7 +30,13 @@ export default function NewDefinitionPage() {
       action={formAction}
     >
       <label htmlFor="word">Word</label>
-      <input required={true} name="word" className="border" id="word" />
+      <input
+        maxLength={64}
+        required={true}
+        name="word"
+        className="border"
+        id="word"
+      />
 
       <DefinitionEditor definitionText={definitionText} />
 
