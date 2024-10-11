@@ -26,9 +26,7 @@ export default async function DefinitionPage({
             <div className="flex flex-row justify-between">
               <h1 className="text-4xl italic text-blue-900">{def.word}</h1>
               <div className="flex flex-row items-center gap-2">
-                <Link
-                  href={"/new-definition?word=" + encodeURIComponent(def.word)}
-                >
+                <Link href={"/edit?word=" + encodeURIComponent(def.word)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={24}

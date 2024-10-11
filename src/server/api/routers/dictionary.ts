@@ -27,20 +27,48 @@ export const dictionaryRouter = createTRPCRouter({
     }),
   post_def: publicProcedure
     .input(z.object({ word: z.string(), definition: z.string() }))
-    .query(async ({ ctx, input }) => {
-      if (!ctx.session) return;
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.session) return false;
 
-      await ctx.db
-        .insert(definitions)
-        .values({
+      try {
+        await ctx.db.insert(definitions).values({
           ownerId: ctx.session.user.id,
           word: input.word,
           definition: input.definition,
-        })
-        .onConflictDoUpdate({
-          target: [definitions.ownerId, definitions.word],
-          set: { definition: input.definition },
         });
+        return true;
+      } catch {
+        return false;
+      }
+    }),
+  update_def: publicProcedure
+    .input(
+      z.object({
+        word: z.string(),
+        definition: z.string(),
+        startingWord: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.session) return;
+
+      try {
+        await ctx.db
+          .update(definitions)
+          .set({
+            word: input.word,
+            definition: input.definition,
+          })
+          .where(
+            and(
+              eq(definitions.word, input.startingWord),
+              eq(definitions.ownerId, ctx.session.user.id),
+            ),
+          );
+        return true;
+      } catch {
+        return false;
+      }
     }),
   list_defs: publicProcedure
     .input(z.object({ page: z.number() }))

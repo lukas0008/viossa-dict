@@ -43,7 +43,7 @@ export const SearchBar = () => {
 
   return (
     <div className={"pointer-events-auto mx-auto p-2 " + styles.searchBar}>
-      <div className="flex w-96 flex-row items-center rounded-xl bg-white pr-2">
+      <div className="flex w-40 flex-row items-center rounded-xl bg-white pr-2 sm:w-64 md:w-96">
         <input
           className="w-full rounded-l-xl p-1.5 hover:outline-none focus:outline-none"
           onChange={onChange}
@@ -75,7 +75,7 @@ export const SearchBar = () => {
       {typeof suggestions != "undefined" ? (
         <div
           className={
-            "absolute hidden w-96 flex-col gap-2 border bg-white p-2 shadow " +
+            "absolute hidden w-40 flex-col gap-2 border bg-white p-2 shadow sm:w-64 md:w-96 " +
             styles.searchSuggestions
           }
         >

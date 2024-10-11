@@ -10,10 +10,10 @@ export const action = async (sigma: any, form: FormData) => {
   if (typeof word != "string" || typeof def != "string") {
     return { sigma: false, word };
   }
-  await api.dictionary.post_def({
+  const sigmastic = await api.dictionary.post_def({
     word: word?.toString(),
     definition: def?.toString(),
   });
 
-  return { sigma: true, word };
+  return { done: true, sigma: sigmastic, word };
 };
